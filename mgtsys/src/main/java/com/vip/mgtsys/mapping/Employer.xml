@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vip.mgtsys.dao.EmployerDao">
+    <!-- 定义缓存  一般是一级缓存，如果用同一个sqlsession 那么相同查询直接会从缓存中查找 
+    <cache size="1024" flushInterval="60000" eviction="LRU" readOnly="false"></cache>
+    -->
+    <resultMap id="employerInfo" type="com.vip.mgtsys.model.EmployerInfo">
+        <id property="employerId" column="employer_id"/>
+        <result property="employerName" column="employer_name"/>
+    </resultMap>
+    
+    <!-- 查找所有 -->
+    <select id="getEmployerInfo" resultMap="employerInfo">
+        select employer_id, employer_name from tbl_sys_employer
+        <where>
+            <if test="usrId != null and usrId != '' ">
+                and employer_id = #{usrId}
+            </if>
+            <if test="pwd != null and pwd != '' ">
+                and employer_pwd = #{pwd}
+            </if>
+        </where>
+    </select>
+    
+    <insert id="insertEmployer">
+        insert into tbl_sys_employer
+        (
+          sid,
+          employer_id,
+          employer_pwd,
+          employer_mail,
+          employer_status
+        )
+        values(
+          #{sid},
+          #{employerId},
+          #{employerPwd},
+          #{employerMail},
+          #{employerStatus}
+        )
+    </insert>
+    
+    <select id="getMaxSid" resultType="int">
+        select
+            count(1)
+        from
+            tbl_sys_employer
+        where
+            create_time >= #{sysDate}
+    </select>
+</mapper>

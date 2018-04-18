@@ -22,7 +22,7 @@ public class LoginAction {
 		return "login/login";
 	}
 	
-	@RequestMapping("/doLogin")
+	@RequestMapping("/login/doLogin")
 	@ResponseBody
 	public EmployerInfo doLogin(@RequestParam String userId,
 			@RequestParam String pwd, HttpSession session) {

@@ -3,6 +3,8 @@ package com.vip.mgtsys.controller.regist;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,12 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.vip.mgtsys.constant.Constant;
 import com.vip.mgtsys.model.EmployerInfo;
 import com.vip.mgtsys.model.RegistInfo;
 import com.vip.mgtsys.service.regist.RegistService;
 
 @Controller
 @SessionAttributes("registInfo")
+@RequestMapping("/regist")
 public class RegistAction {
 
 	@Autowired
@@ -62,7 +66,7 @@ public class RegistAction {
 	
 	@RequestMapping("/doRegist")
 	@ResponseBody
-	public String doRegist(@RequestBody RegistInfo registInfo) {
+	public String doRegist(@RequestBody RegistInfo registInfo, HttpSession session) {
 		
 		EmployerInfo employerInfo = registService.getEmployerInfo(registInfo.getUserId(), null);
 		
@@ -74,13 +78,17 @@ public class RegistAction {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		int sid = registService.getMaxSid(formatter.format(dt));
 		
+		formatter = new SimpleDateFormat("yyyyMMdd");
+		String newSid = formatter.format(dt).concat(String.format("00000", sid+1));
 		employerInfo = new EmployerInfo();
-		employerInfo.setSid(Integer.toString(sid+1));
+		employerInfo.setSid(newSid);
 		employerInfo.setEmployerId(registInfo.getUserId());
 		employerInfo.setEmployerMail(registInfo.getEmail());
 		employerInfo.setEmployerPwd(registInfo.getPwd());
-		employerInfo.setEmployerStatus("1");
+		employerInfo.setEmployerStatus(Constant.EMPLOYER_STATUS_01);
 		registService.insertEmployer(employerInfo);
+		
+		session.setAttribute("sid", newSid);
 		
 		return "0";
 	}

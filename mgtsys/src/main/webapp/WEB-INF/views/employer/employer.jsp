@@ -22,49 +22,28 @@
 </head>
 
 <body data-type="employerInfo" class="theme-black" ng-app="myApp" ng-controller="employerInfoCtr">
-  <div ng-init="init()"></div>
   <div class="am-g tpl-g">
     <div class="tpl-login">
       <div class="tpl-login-content">
         <div class="tpl-login-title">信息完善</div>
-        <span class="tpl-login-content-info">完善商家的信息</span>
+        <span class="tpl-login-content-info">完善商家的详细信息</span>
 
         <form class="am-form tpl-form-line-form" name="registForm">
-          <div class="error-style" ng-show="errorFlg">
-            <span ng-show="registForm.email.$error.required">
-              	请输入邮箱！
-            </span>
-            <span ng-show="registForm.email.$error.email">
-              	请输入正确的邮箱！
-            </span>
-            <span ng-show="userIdExist">
-              	用户已存在请重新输入！
-            </span>
-          </div>
           <div class="am-form-group">
-            <input type="email" name="email" placeholder="请输入邮箱" ng-model="email" required>
+            <input type="text" name="userName" placeholder="请输入店名" ng-model="userName" required>
           </div>
 
           <div class="am-form-group">
-            <input type="text" name="userId" placeholder="请输入用户ID" ng-model="userId" required>
+            <input type="text" name="userTel" placeholder="请输入联系电话" ng-model="userTel" required>
           </div>
 
           <div class="am-form-group">
-            <input type="password" name="pwd" placeholder="请输入密码" ng-model="pwd" required>
-          </div>
-
-          <div class="am-form-group">
-            <input type="password" name="confirmPwd" placeholder="请再次输入密码" ng-model="confirmPwd" required>
-          </div>
-
-          <div class="am-form-group tpl-login-remember-me">
-            <input name="agreement" type="checkbox" ng-model="agreement">
-            <label for="agreement">我已阅读并同意 <a href="javascript:;" ng-click="goRegistProtocal()">《用户注册协议》</a></label>
+            <input type="text" name="userAddress" placeholder="请输入联系地址" ng-model="userAddress" required>
           </div>
 
           <div class="am-form-group">
             <button type="button" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn am-btn-block"
-            ng-click="doRegist">注册</button>
+            ng-click="doCommit()">提交</button>
             <button type="button" class="am-btn am-btn-primary  am-btn-block tpl-btn-bg-color-success  tpl-login-btn am-btn-block"
             ng-click="doBack()">返回</button>
           </div>
@@ -75,40 +54,17 @@
 
 <script>
 var app = angular.module('myApp', []);
-app.controller('registCtr', function($scope, $http){
+app.controller('employerInfoCtr', function($scope, $http){
 	$scope.doBack = function() {
-		$http.post("<%=request.getContextPath()%>/doBack")
-		    .then(function(response){
-		    	window.location = "<%=request.getContextPath()%>";
-		    });
+		window.location = "<%=request.getContextPath()%>";
     };
-    $scope.goRegistProtocal = function() {
-    	$scope.errorFlg = false;
-    	if(!$scope.registForm.$valid){
-    		$scope.errorFlg = true;
-    		return;
-    	}
-    	var data = {userId:$scope.userId, email:$scope.email};
-    	$http.post("<%=request.getContextPath()%>/goRegistProtocal", data)
+    $scope.doCommit = function() {
+    	var data = {employerName:$scope.userName, employerTel:$scope.userTel, employerAddress:$scope.userAddress};
+    	$http.post("<%=request.getContextPath()%>/employer/doCommit", data)
     	    .then(function(response){
-    		    window.location = "<%=request.getContextPath()%>/registProtocal";
+    		    window.location = "<%=request.getContextPath()%>/employer/addEmployee";
     	    });
     };
-    $scope.init = function() {
-    	
-    };
-    $scope.doRegist = function() {
-    	var data = {userId:$scope.userId, email:$scope.email, password:$scope.pwd};
-    	$http.post("<%=request.getContextPath()%>/doRegist", data)
-    	    .then(function(response){
-    	    	if(response.data.employerName != null){
-    	    		$scope.errorFlg = true;
-    	    		$scope.userIdExist = true;
-    	    	} else {
-    	    		window.location = "<%=request.getContextPath()%>/employer/employer";
-    	    	}
-    	    });
-    }
 });
 </script>
 

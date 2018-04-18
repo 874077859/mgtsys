@@ -111,15 +111,15 @@
 var app = angular.module('myApp', []);
 app.controller('protocalCtr', function($scope, $http){
 	$scope.agree = function() {
-		$http.post("<%=request.getContextPath()%>/doAgreeProtocal?flg=0")
+		$http.post("<%=request.getContextPath()%>/regist/doAgreeProtocal?flg=0")
 		    .then(function(response){
-				window.location = "<%=request.getContextPath()%>/goRegist";
+				window.location = "<%=request.getContextPath()%>/regist/goRegist";
 		    });
     };
     $scope.disagree = function() {
-    	$http.post("<%=request.getContextPath()%>/doAgreeProtocal?flg=1")
+    	$http.post("<%=request.getContextPath()%>/regist/doAgreeProtocal?flg=1")
 	        .then(function(response){
-			    window.location = "<%=request.getContextPath()%>/goRegist";
+			    window.location = "<%=request.getContextPath()%>/regist/goRegist";
 	        });
     }
 });

@@ -9,4 +9,6 @@ public interface RegistService {
 	int getMaxSid(String sysDate);
 	
 	int insertEmployer(EmployerInfo employerInfo);
+	
+	int updateEmployer(EmployerInfo employerInfo);
 }

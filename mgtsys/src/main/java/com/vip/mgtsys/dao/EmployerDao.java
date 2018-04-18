@@ -16,4 +16,11 @@ public interface EmployerDao {
 			                  @Param("employerMail") String employerMail,
 			                  @Param("employerStatus") String employerStatus
 			                 );
+	
+	public int updateEmployer(@Param("employerName") String employerName,
+			                  @Param("employerTel") String employerTel,
+			                  @Param("employerAddress") String employerAddress,
+			                  @Param("employerPermission") String employerPermission,
+			                  @Param("sid") String sid
+			                 );
 }

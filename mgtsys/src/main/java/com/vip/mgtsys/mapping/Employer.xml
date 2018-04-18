@@ -50,4 +50,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where
             create_time >= #{sysDate}
     </select>
+    
+    <update id="updateEmployer">
+        update tbl_sys_employer
+        set
+            employer_name = #{employerName},
+            employer_tel = #{employerTel},
+            employer_address = #{employerAddress},
+            employer_permission = #{employerPermission}
+        where
+            sid = #{sid}
+    </update>
 </mapper>

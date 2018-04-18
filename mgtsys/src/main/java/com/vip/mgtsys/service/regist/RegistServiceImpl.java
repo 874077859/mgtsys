@@ -30,4 +30,13 @@ public class RegistServiceImpl implements RegistService {
 				                          employerInfo.getEmployerMail(),
 				                          employerInfo.getEmployerStatus());
 	}
+
+	@Override
+	public int updateEmployer(EmployerInfo employerInfo) {
+		return employerDao.updateEmployer(employerInfo.getEmployerName(),
+				                          employerInfo.getEmployerTel(),
+				                          employerInfo.getEmployerAddress(),
+				                          employerInfo.getEmployerPermission(),
+				                          employerInfo.getSid());
+	}
 }

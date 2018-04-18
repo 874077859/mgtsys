@@ -77,20 +77,20 @@
 var app = angular.module('myApp', []);
 app.controller('registCtr', function($scope, $http){
 	$scope.doBack = function() {
-		$http.post("<%=request.getContextPath()%>/doBack")
+		$http.post("<%=request.getContextPath()%>/regist/doBack")
 		    .then(function(response){
 		    	window.location = "<%=request.getContextPath()%>";
 		    });
     };
     $scope.goRegistProtocal = function() {
     	var data = {userId:$scope.userId, email:$scope.email};
-    	$http.post("<%=request.getContextPath()%>/goRegistProtocal", data)
+    	$http.post("<%=request.getContextPath()%>/regist/goRegistProtocal", data)
     	    .then(function(response){
-    		    window.location = "<%=request.getContextPath()%>/registProtocal";
+    		    window.location = "<%=request.getContextPath()%>/regist/registProtocal";
     	    });
     };
     $scope.init = function() {
-    	$http.post("<%=request.getContextPath()%>/getRegistInfo")
+    	$http.post("<%=request.getContextPath()%>/regist/getRegistInfo")
 	        .then(function(response){
 		        $scope.email = response.data.email;
 		        $scope.userId = response.data.userId;
@@ -104,7 +104,7 @@ app.controller('registCtr', function($scope, $http){
     		return;
     	}
     	var data = {userId:$scope.userId, email:$scope.email, pwd:$scope.pwd};
-    	$http.post("<%=request.getContextPath()%>/doRegist", data)
+    	$http.post("<%=request.getContextPath()%>/regist/doRegist", data)
     	    .then(function(response){
     	    	if(response.data == "1"){
     	    		$scope.errorFlg = true;

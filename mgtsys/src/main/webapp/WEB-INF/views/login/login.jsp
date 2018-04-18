@@ -60,7 +60,7 @@
 var app = angular.module('myApp', []);
 app.controller('loginCtr', function($scope, $http){
 	$scope.doLogin = function() {
-		$http.post("<%=request.getContextPath()%>/doLogin?userId="+$scope.userId+"&pwd="+$scope.pwd)
+		$http.post("<%=request.getContextPath()%>/login/doLogin?userId="+$scope.userId+"&pwd="+$scope.pwd)
 				.then(function(response){
 					if(response.data.employerId != null) {
 						window.location = "<%=request.getContextPath()%>/employer/employee";
@@ -71,7 +71,7 @@ app.controller('loginCtr', function($scope, $http){
 				});
     };
     $scope.goRegist = function() {
-    	window.location = "<%=request.getContextPath()%>/goRegist";
+    	window.location = "<%=request.getContextPath()%>/regist/goRegist";
     }
 });
 </script>
